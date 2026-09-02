@@ -1,0 +1,8 @@
+{
+  "column": "GG Langtext",
+  "op": "eq",
+  "value": "Kultur und Wissenschaft",
+  "reason": "Untersuchungsgegenstand ist die Geschäftsgruppe Kultur und Wissenschaft",
+  "block": "qc.filter",
+  "stage": "QC"
+}

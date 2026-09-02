@@ -1,0 +1,8 @@
+{
+  "column": "Ausbezahlte Fördersumme",
+  "op": "lt",
+  "value": 50000000,
+  "reason": "Großförderungen über 50 Mio. € sind Einzelfallentscheidungen und verzerren den Jahresvergleich",
+  "block": "qc.filter",
+  "stage": "QC"
+}

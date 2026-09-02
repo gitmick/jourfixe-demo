@@ -1,0 +1,13 @@
+{
+  "file": "foerderbericht2023.csv",
+  "delimiter": "auto",
+  "decimal": "auto",
+  "encoding": "UTF-8",
+  "na_strings": ["", "NA"],
+  "skip": 0,
+  "add_column": "jahr",
+  "add_value": 2023,
+  "on_ragged": "error",
+  "block": "qc.read",
+  "stage": "QC"
+}

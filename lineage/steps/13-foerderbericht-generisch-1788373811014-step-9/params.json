@@ -1,0 +1,10 @@
+{
+  "title": "Kultur und Wissenschaft — ausbezahlte Förderungen",
+  "type": "bar",
+  "x": "jahr",
+  "y": "wert",
+  "ylim": [
+    205000000,
+    272000000
+  ]
+}

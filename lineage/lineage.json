@@ -1,0 +1,422 @@
+{
+  "root": "step15",
+  "steps": [
+    {
+      "id": "step01",
+      "name": "Step 8",
+      "tree": "cockpit",
+      "cmd": "Rscript qc.read.R",
+      "env": "jam-r 1.0.0",
+      "ran": true,
+      "description": "qc.read — Foerderbericht 2024 lesen",
+      "rationale": "qc.read mit add_column=\"jahr\", add_value=2024, file=\"foerderbericht2024.csv\"",
+      "keyStep": false,
+      "dir": "steps/01-cockpit-step-8",
+      "inputs": [
+        "foerderbericht2024.csv",
+        "params.json",
+        "params.R",
+        "qc.read.R"
+      ],
+      "outputs": [
+        "out.csv",
+        "params.used.json",
+        "schema.csv"
+      ]
+    },
+    {
+      "id": "step02",
+      "name": "Step 9",
+      "tree": "cockpit",
+      "cmd": "Rscript qc.read.R",
+      "env": "jam-r 1.0.0",
+      "ran": true,
+      "description": "qc.read — Foerderbericht 2023 lesen",
+      "rationale": "qc.read mit add_column=\"jahr\", add_value=2023, file=\"foerderbericht2023.csv\"",
+      "keyStep": false,
+      "dir": "steps/02-cockpit-step-9",
+      "inputs": [
+        "foerderbericht2023.csv",
+        "params.json",
+        "params.R",
+        "qc.read.R"
+      ],
+      "outputs": [
+        "out.csv",
+        "params.used.json",
+        "schema.csv"
+      ]
+    },
+    {
+      "id": "step03",
+      "name": "Step 1",
+      "tree": "foerderbericht-generisch-1788373811014",
+      "cmd": "Rscript qc.read.R",
+      "env": "jam-r 1.0.0",
+      "ran": true,
+      "description": "qc.read — Foerderbericht 2023 lesen",
+      "rationale": "qc.read mit add_column=\"jahr\", add_value=2023, file=\"foerderbericht2023.csv\"",
+      "keyStep": false,
+      "dir": "steps/03-foerderbericht-generisch-1788373811014-step-1",
+      "inputs": [
+        "foerderbericht2023.csv",
+        "params.json",
+        "params.R",
+        "qc.read.R"
+      ],
+      "outputs": [
+        "out.csv",
+        "params.used.json",
+        "schema.csv"
+      ]
+    },
+    {
+      "id": "step04",
+      "name": "Step 2",
+      "tree": "foerderbericht-generisch-1788373811014",
+      "cmd": "Rscript qc.read.R",
+      "env": "jam-r 1.0.0",
+      "ran": true,
+      "description": "qc.read — Foerderbericht 2024 lesen",
+      "rationale": "qc.read mit add_column=\"jahr\", add_value=2024, file=\"foerderbericht2024.csv\"",
+      "keyStep": false,
+      "dir": "steps/04-foerderbericht-generisch-1788373811014-step-2",
+      "inputs": [
+        "foerderbericht2024.csv",
+        "params.json",
+        "params.R",
+        "qc.read.R"
+      ],
+      "outputs": [
+        "out.csv",
+        "params.used.json",
+        "schema.csv"
+      ]
+    },
+    {
+      "id": "step05",
+      "name": "Step 10",
+      "tree": "cockpit",
+      "cmd": "Rscript qc.bind.R",
+      "env": "jam-r 1.0.0",
+      "ran": true,
+      "description": "qc.bind — beide Jahre stapeln",
+      "rationale": "qc.bind mit files=[\"a.csv\",\"b.csv\"]",
+      "keyStep": false,
+      "dir": "steps/05-cockpit-step-10",
+      "inputs": [
+        "a.csv",
+        "b.csv",
+        "params.json",
+        "params.R",
+        "qc.bind.R"
+      ],
+      "outputs": [
+        "out.csv",
+        "params.used.json"
+      ]
+    },
+    {
+      "id": "step06",
+      "name": "Step 3",
+      "tree": "foerderbericht-generisch-1788373811014",
+      "cmd": "Rscript qc.bind.R",
+      "env": "jam-r 1.0.0",
+      "ran": true,
+      "description": "qc.bind — beide Jahre stapeln",
+      "rationale": "qc.bind mit files=[\"a.csv\",\"b.csv\"]",
+      "keyStep": false,
+      "dir": "steps/06-foerderbericht-generisch-1788373811014-step-3",
+      "inputs": [
+        "a.csv",
+        "b.csv",
+        "params.json",
+        "params.R",
+        "qc.bind.R"
+      ],
+      "outputs": [
+        "out.csv",
+        "params.used.json"
+      ]
+    },
+    {
+      "id": "step07",
+      "name": "Step 11",
+      "tree": "cockpit",
+      "cmd": "Rscript qc.filter.R",
+      "env": "jam-r 1.0.0",
+      "ran": true,
+      "description": "qc.filter — auf Kultur und Wissenschaft",
+      "rationale": "Untersuchungsgegenstand ist die Geschäftsgruppe Kultur und Wissenschaft",
+      "keyStep": false,
+      "dir": "steps/07-cockpit-step-11",
+      "inputs": [
+        "data.csv",
+        "params.json",
+        "params.R",
+        "qc.filter.R"
+      ],
+      "outputs": [
+        "out.csv",
+        "params.used.json"
+      ]
+    },
+    {
+      "id": "step08",
+      "name": "Step 4",
+      "tree": "foerderbericht-generisch-1788373811014",
+      "cmd": "Rscript qc.filter.R",
+      "env": "jam-r 1.0.0",
+      "ran": true,
+      "description": "qc.filter — auf Kultur und Wissenschaft",
+      "rationale": "Untersuchungsgegenstand ist die Geschäftsgruppe Kultur und Wissenschaft",
+      "keyStep": false,
+      "dir": "steps/08-foerderbericht-generisch-1788373811014-step-4",
+      "inputs": [
+        "data.csv",
+        "params.json",
+        "params.R",
+        "qc.filter.R"
+      ],
+      "outputs": [
+        "out.csv",
+        "params.used.json"
+      ]
+    },
+    {
+      "id": "step09",
+      "name": "Step 5",
+      "tree": "foerderbericht-generisch-1788373811014",
+      "cmd": "Rscript qc.filter.R",
+      "env": "jam-r 1.0.0",
+      "ran": true,
+      "description": "qc.filter — Grossfoerderungen ausschliessen",
+      "rationale": "Großförderungen über 50 Mio. € sind Einzelfallentscheidungen und verzerren den Jahresvergleich",
+      "keyStep": false,
+      "dir": "steps/09-foerderbericht-generisch-1788373811014-step-5",
+      "inputs": [
+        "data.csv",
+        "params.json",
+        "params.R",
+        "qc.filter.R"
+      ],
+      "outputs": [
+        "out.csv",
+        "params.used.json"
+      ]
+    },
+    {
+      "id": "step10",
+      "name": "Step 12",
+      "tree": "cockpit",
+      "cmd": "Rscript qc.filter.R",
+      "env": "jam-r 1.0.0",
+      "ran": true,
+      "description": "qc.filter — Grossfoerderungen ausschliessen",
+      "rationale": "Großförderungen über 50 Mio. € sind Einzelfallentscheidungen und verzerren den Jahresvergleich",
+      "keyStep": false,
+      "dir": "steps/10-cockpit-step-12",
+      "inputs": [
+        "data.csv",
+        "params.json",
+        "params.R",
+        "qc.filter.R"
+      ],
+      "outputs": [
+        "out.csv",
+        "params.used.json"
+      ]
+    },
+    {
+      "id": "step11",
+      "name": "Step 6",
+      "tree": "foerderbericht-generisch-1788373811014",
+      "cmd": "Rscript eda.group.R",
+      "env": "jam-r 1.0.0",
+      "ran": true,
+      "description": "eda.group — nach Jahr summieren",
+      "rationale": "eda.group mit aggregate=\"sum\", by=\"jahr\", value=\"Ausbezahlte Fördersumme\"",
+      "keyStep": false,
+      "dir": "steps/11-foerderbericht-generisch-1788373811014-step-6",
+      "inputs": [
+        "data.csv",
+        "eda.group.R",
+        "params.json",
+        "params.R"
+      ],
+      "outputs": [
+        "out.csv",
+        "params.used.json",
+        "plot.png"
+      ]
+    },
+    {
+      "id": "step12",
+      "name": "Step 13",
+      "tree": "cockpit",
+      "cmd": "Rscript eda.group.R",
+      "env": "jam-r 1.0.0",
+      "ran": true,
+      "description": "eda.group — nach Jahr summieren",
+      "rationale": "eda.group mit aggregate=\"sum\", by=\"jahr\", value=\"Ausbezahlte Fördersumme\"",
+      "keyStep": false,
+      "dir": "steps/12-cockpit-step-13",
+      "inputs": [
+        "data.csv",
+        "eda.group.R",
+        "params.json",
+        "params.R"
+      ],
+      "outputs": [
+        "out.csv",
+        "params.used.json",
+        "plot.png"
+      ]
+    },
+    {
+      "id": "step13",
+      "name": "Step 9",
+      "tree": "foerderbericht-generisch-1788373811014",
+      "cmd": "Rscript report.figure.R",
+      "env": "jam-r 1.0.0",
+      "ran": true,
+      "description": "report.figure — die Abbildung",
+      "rationale": "report.figure mit title=\"Kultur und Wissenschaft — ausbezahlte Förderungen\", type=\"bar\", x=\"jahr\", y=\"wert\", ylim=[205000000,272000000]",
+      "keyStep": false,
+      "dir": "steps/13-foerderbericht-generisch-1788373811014-step-9",
+      "inputs": [
+        "data.csv",
+        "params.json",
+        "params.R",
+        "report.figure.R"
+      ],
+      "outputs": [
+        "figure.png",
+        "params.used.json"
+      ]
+    },
+    {
+      "id": "step14",
+      "name": "Step 15",
+      "tree": "cockpit",
+      "cmd": "Rscript report.figure.R",
+      "env": "jam-r 1.0.0",
+      "ran": true,
+      "description": "report.figure — die Abbildung",
+      "rationale": "report.figure mit title=\"Kultur und Wissenschaft — ausbezahlte Förderungen\", type=\"bar\", x=\"jahr\", y=\"wert\", ylim=[205000000,272000000]",
+      "keyStep": false,
+      "dir": "steps/14-cockpit-step-15",
+      "inputs": [
+        "data.csv",
+        "params.json",
+        "params.R",
+        "report.figure.R"
+      ],
+      "outputs": [
+        "figure.png",
+        "params.used.json"
+      ]
+    },
+    {
+      "id": "step15",
+      "name": "Step 13",
+      "tree": "report.render",
+      "cmd": "Rscript render_poster.R",
+      "env": "qms-docx 0.3.0",
+      "ran": true,
+      "description": "Render report report (chapters + verbalised rule-slots) via /Projects/jamdemo/render-method",
+      "keyStep": false,
+      "dir": "steps/15-report-render-step-13",
+      "inputs": [
+        "data-format.md",
+        "data-origin.md",
+        "data.md",
+        "eda-anomalies.md",
+        "eda-anomalies.png",
+        "eda-overview.md",
+        "eda-overview.png",
+        "eda.md",
+        "model-computation.md",
+        "model-computation.png",
+        "model-robustness.md",
+        "model-robustness.png",
+        "model.md",
+        "render_poster.R",
+        "report.json",
+        "results.md"
+      ],
+      "outputs": [
+        "JAM-POSTER.docx",
+        "JAM-POSTER.html",
+        "JAM-POSTER.pdf",
+        "JAM-POSTER.Rmd"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "step01",
+      "to": "step05"
+    },
+    {
+      "from": "step02",
+      "to": "step05"
+    },
+    {
+      "from": "step05",
+      "to": "step07"
+    },
+    {
+      "from": "step07",
+      "to": "step10"
+    },
+    {
+      "from": "step03",
+      "to": "step06"
+    },
+    {
+      "from": "step04",
+      "to": "step06"
+    },
+    {
+      "from": "step06",
+      "to": "step08"
+    },
+    {
+      "from": "step08",
+      "to": "step09"
+    },
+    {
+      "from": "step09",
+      "to": "step10"
+    },
+    {
+      "from": "step10",
+      "to": "step12"
+    },
+    {
+      "from": "step12",
+      "to": "step14"
+    },
+    {
+      "from": "step09",
+      "to": "step11"
+    },
+    {
+      "from": "step11",
+      "to": "step13"
+    },
+    {
+      "from": "step13",
+      "to": "step14"
+    },
+    {
+      "from": "step14",
+      "to": "step15"
+    },
+    {
+      "from": "step12",
+      "to": "step15"
+    }
+  ]
+}

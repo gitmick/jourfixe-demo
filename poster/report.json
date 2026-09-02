@@ -1,0 +1,154 @@
+{
+  "schemaVersion": "2.0.0",
+  "reportType": "jam-poster",
+  "renderMethod": "/Projects/jamdemo/render-method",
+  "outputFormats": [
+    "docx",
+    "pdf",
+    "html"
+  ],
+  "metadata": {
+    "title": "",
+    "authors": [],
+    "team": ""
+  },
+  "links": {},
+  "sections": [
+    {
+      "id": "data",
+      "level": 1,
+      "heading": "Data",
+      "blocks": [
+        {
+          "type": "narrative",
+          "file": "data.md"
+        }
+      ]
+    },
+    {
+      "id": "data-origin",
+      "level": 2,
+      "heading": "Provenance",
+      "blocks": [
+        {
+          "type": "narrative",
+          "file": "data-origin.md"
+        }
+      ]
+    },
+    {
+      "id": "data-format",
+      "level": 2,
+      "heading": "Format",
+      "blocks": [
+        {
+          "type": "narrative",
+          "file": "data-format.md"
+        }
+      ]
+    },
+    {
+      "id": "eda",
+      "level": 1,
+      "heading": "Exploratory analysis",
+      "blocks": [
+        {
+          "type": "narrative",
+          "file": "eda.md"
+        }
+      ]
+    },
+    {
+      "id": "eda-overview",
+      "level": 2,
+      "heading": "Overview",
+      "blocks": [
+        {
+          "type": "narrative",
+          "file": "eda-overview.md"
+        },
+        {
+          "type": "image",
+          "file": "slots/eda-overview.png"
+        }
+      ]
+    },
+    {
+      "id": "eda-anomalies",
+      "level": 2,
+      "heading": "Anomalies",
+      "blocks": [
+        {
+          "type": "narrative",
+          "file": "eda-anomalies.md"
+        },
+        {
+          "type": "image",
+          "file": "slots/eda-anomalies.png"
+        }
+      ]
+    },
+    {
+      "id": "model",
+      "level": 1,
+      "heading": "Model",
+      "blocks": [
+        {
+          "type": "narrative",
+          "file": "model.md"
+        }
+      ]
+    },
+    {
+      "id": "model-computation",
+      "level": 2,
+      "heading": "What was computed",
+      "blocks": [
+        {
+          "type": "narrative",
+          "file": "model-computation.md"
+        },
+        {
+          "type": "image",
+          "file": "slots/model-computation.png"
+        }
+      ]
+    },
+    {
+      "id": "model-robustness",
+      "level": 2,
+      "heading": "Robustness",
+      "blocks": [
+        {
+          "type": "narrative",
+          "file": "model-robustness.md"
+        },
+        {
+          "type": "image",
+          "file": "slots/model-robustness.png"
+        }
+      ]
+    },
+    {
+      "id": "results",
+      "level": 1,
+      "heading": "Result",
+      "blocks": [
+        {
+          "type": "narrative",
+          "file": "results.md"
+        }
+      ]
+    }
+  ],
+  "document": {
+    "id": "JAM-POSTER",
+    "title": "Title of the claim — fill this in",
+    "class": "As-If Science Jam · Poster",
+    "revision": "1",
+    "created_by": "Team — fill this in",
+    "approved_by": "—",
+    "issued": "",
+    "valid": ""
+  }
+}

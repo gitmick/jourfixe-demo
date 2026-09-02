@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lineage of a published report</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,600&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<style>
+:root {
+  --ink: #171c22; --ink-soft: #5a6672; --line: #d7dee6; --ground: #f7f8fa;
+  --card: #ffffff; --accent: #2d5f8b; --accent-soft: #e8f0f7; --warn: #9a5b1e;
+  --font-text: 'Newsreader', Georgia, serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ink: #e6ebf1; --ink-soft: #94a3b3; --line: #2a333d; --ground: #12161b;
+    --card: #191f26; --accent: #7db2e0; --accent-soft: #1d2b38; --warn: #d9a05b;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--ground); color: var(--ink); font-family: var(--font-text);
+       font-size: 16px; line-height: 1.55; }
+header { padding: 2.2rem 2rem 1.2rem; border-bottom: 1px solid var(--line); background: var(--card); }
+header h1 { margin: 0 0 .3rem; font-size: 1.6rem; font-weight: 600; letter-spacing: -.01em; }
+header p { margin: 0; color: var(--ink-soft); max-width: 62ch; }
+header .links { margin-top: .9rem; display: flex; gap: 1.2rem; flex-wrap: wrap; font-size: .9rem; }
+header a { color: var(--accent); }
+main { display: grid; grid-template-columns: minmax(0,1fr) 24rem; gap: 0; min-height: 70vh; }
+@media (max-width: 900px) { main { grid-template-columns: 1fr; } }
+#canvas { padding: 1.6rem; overflow-x: auto; }
+svg { display: block; }
+.node rect { fill: var(--card); stroke: var(--line); stroke-width: 1.5; rx: 7; cursor: pointer; }
+.node:hover rect { stroke: var(--accent); }
+.node.sel rect { stroke: var(--accent); stroke-width: 2.5; fill: var(--accent-soft); }
+.node.root rect { stroke: var(--accent); stroke-width: 2; }
+.node text { font-family: var(--font-mono); font-size: 12px; fill: var(--ink); pointer-events: none; }
+.node text.sub { font-size: 10.5px; fill: var(--ink-soft); }
+path.edge { fill: none; stroke: var(--line); stroke-width: 1.6; }
+path.edge.lit { stroke: var(--accent); stroke-width: 2.4; }
+aside { border-left: 1px solid var(--line); background: var(--card); padding: 1.6rem 1.4rem;
+        font-size: .92rem; }
+@media (max-width: 900px) { aside { border-left: 0; border-top: 1px solid var(--line); } }
+aside h2 { margin: 0 0 .2rem; font-size: 1.1rem; font-weight: 600; }
+aside .tree { color: var(--ink-soft); font-family: var(--font-mono); font-size: .78rem; margin-bottom: 1rem; }
+aside dl { margin: 0 0 1.1rem; }
+aside dt { font-size: .72rem; text-transform: uppercase; letter-spacing: .07em; color: var(--ink-soft);
+           margin-bottom: .15rem; }
+aside dd { margin: 0 0 .8rem; }
+aside code, .mono { font-family: var(--font-mono); font-size: .82rem; }
+aside .why { border-left: 3px solid var(--accent); padding-left: .7rem; color: var(--ink);
+             font-style: italic; }
+ul.files { list-style: none; margin: 0; padding: 0; }
+ul.files li { display: flex; justify-content: space-between; gap: .6rem; padding: .18rem 0;
+              border-bottom: 1px solid var(--line); font-family: var(--font-mono); font-size: .78rem; }
+ul.files li:last-child { border-bottom: 0; }
+ul.files .h { color: var(--ink-soft); }
+.hint { color: var(--ink-soft); font-style: italic; }
+footer { padding: 1.2rem 2rem 2.4rem; color: var(--ink-soft); font-size: .85rem;
+         border-top: 1px solid var(--line); }
+footer a { color: var(--accent); }
+</style></head>
+<body>
+<header>
+  <h1>What this report is made of</h1>
+  <p>Fifteen computations, walked backwards from the step that rendered the poster to the raw
+     CSVs it started from. Click a box to see what went in, what came out, and why it exists.</p>
+  <div class="links">
+    <a href="../poster/JAM-POSTER.pdf">The report (PDF)</a>
+    <a href="../poster/JAM-POSTER.html">as HTML</a>
+    <a href="https://github.com/gitmick/jourfixe-demo">Repository</a>
+  </div>
+</header>
+<main>
+  <div id="canvas"></div>
+  <aside id="detail"><p class="hint">Pick a computation on the left.</p></aside>
+</main>
+<footer>
+  Nothing here is signed. A foton id is <code>sha256(canon(inputs, outputs, protocol))</code> and
+  belongs to the kernel that computes it; this page shows what was observed.
+  Internal locators were removed for the public copy — the content hashes, which are the identity,
+  are untouched.
+</footer>
+<script>
+const DATA = {"root": "step15", "steps": [{"id": "step01", "name": "Step 8", "tree": "cockpit", "cmd": "Rscript qc.read.R", "env": "jam-r 1.0.0", "ran": true, "description": "qc.read — Foerderbericht 2024 lesen", "rationale": "qc.read mit add_column=\"jahr\", add_value=2024, file=\"foerderbericht2024.csv\"", "keyStep": false, "dir": "steps/01-cockpit-step-8", "inputs": ["foerderbericht2024.csv", "params.json", "params.R", "qc.read.R"], "outputs": ["out.csv", "params.used.json", "schema.csv"], "files": {"inputs": [{"path": "foerderbericht2024.csv", "hash": "sha256:4f089e4aefb2368010494d3890b8a08c54011b50d9b5fc567b08289c3ac8ef27"}, {"path": "params.json", "hash": "sha256:2a5fc20b52c4c563fa1c46a3ae5973098828674f6d42563e048b92fce10e1dba"}, {"path": "params.R", "hash": "sha256:995e734393e6d0423a14b801ee5e574bc1044d57d91275890535d8927016b6d2"}, {"path": "qc.read.R", "hash": "sha256:8baf84ab1d9bffd55aab1b768cbd8909d5bad4ad81d32b1291f87b6e9944f107"}], "outputs": [{"path": "out.csv", "hash": "sha256:e125cf1daf1395570cf7cf4b348c6da541f28a40b803745671245c710dfce1cb"}, {"path": "params.used.json", "hash": "sha256:84981de7aedf7b82ae533d8c75aaf99d435573ceb4fa7d60a62d804fb4cad24d"}, {"path": "schema.csv", "hash": "sha256:cc85e1b6514711e1b501c2140e1b71f9ec76a2212deb3ac202da4bdd981372f7"}]}}, {"id": "step02", "name": "Step 9", "tree": "cockpit", "cmd": "Rscript qc.read.R", "env": "jam-r 1.0.0", "ran": true, "description": "qc.read — Foerderbericht 2023 lesen", "rationale": "qc.read mit add_column=\"jahr\", add_value=2023, file=\"foerderbericht2023.csv\"", "keyStep": false, "dir": "steps/02-cockpit-step-9", "inputs": ["foerderbericht2023.csv", "params.json", "params.R", "qc.read.R"], "outputs": ["out.csv", "params.used.json", "schema.csv"], "files": {"inputs": [{"path": "foerderbericht2023.csv", "hash": "sha256:3c76906b368e144e31b90190a394ad65c948f9cfbc5d44d1c69555e0bffe453f"}, {"path": "params.json", "hash": "sha256:1575bd62b926dedd2ad3b8936b83911c79fc4e4c709fc374af2102cf244df33d"}, {"path": "params.R", "hash": "sha256:995e734393e6d0423a14b801ee5e574bc1044d57d91275890535d8927016b6d2"}, {"path": "qc.read.R", "hash": "sha256:8baf84ab1d9bffd55aab1b768cbd8909d5bad4ad81d32b1291f87b6e9944f107"}], "outputs": [{"path": "out.csv", "hash": "sha256:5b3719866d5d69f48ae8709cd236a5908b48943929194804e4802a5e80365b24"}, {"path": "params.used.json", "hash": "sha256:5aefb6d06d6a3ea62ee48c3ce162b2fd16e9ca26ff5eac801d42684a1f3e0ee1"}, {"path": "schema.csv", "hash": "sha256:b3f6abb40ea7a38eeba46071c4bee2f80da45ad17ea4253037387088dea815ab"}]}}, {"id": "step03", "name": "Step 1", "tree": "foerderbericht-generisch-1788373811014", "cmd": "Rscript qc.read.R", "env": "jam-r 1.0.0", "ran": true, "description": "qc.read — Foerderbericht 2023 lesen", "rationale": "qc.read mit add_column=\"jahr\", add_value=2023, file=\"foerderbericht2023.csv\"", "keyStep": false, "dir": "steps/03-foerderbericht-generisch-1788373811014-step-1", "inputs": ["foerderbericht2023.csv", "params.json", "params.R", "qc.read.R"], "outputs": ["out.csv", "params.used.json", "schema.csv"], "files": {"inputs": [{"path": "foerderbericht2023.csv", "hash": "sha256:3c76906b368e144e31b90190a394ad65c948f9cfbc5d44d1c69555e0bffe453f"}, {"path": "params.json", "hash": "sha256:1575bd62b926dedd2ad3b8936b83911c79fc4e4c709fc374af2102cf244df33d"}, {"path": "params.R", "hash": "sha256:995e734393e6d0423a14b801ee5e574bc1044d57d91275890535d8927016b6d2"}, {"path": "qc.read.R", "hash": "sha256:8baf84ab1d9bffd55aab1b768cbd8909d5bad4ad81d32b1291f87b6e9944f107"}], "outputs": [{"path": "out.csv", "hash": "sha256:5b3719866d5d69f48ae8709cd236a5908b48943929194804e4802a5e80365b24"}, {"path": "params.used.json", "hash": "sha256:5aefb6d06d6a3ea62ee48c3ce162b2fd16e9ca26ff5eac801d42684a1f3e0ee1"}, {"path": "schema.csv", "hash": "sha256:b3f6abb40ea7a38eeba46071c4bee2f80da45ad17ea4253037387088dea815ab"}]}}, {"id": "step04", "name": "Step 2", "tree": "foerderbericht-generisch-1788373811014", "cmd": "Rscript qc.read.R", "env": "jam-r 1.0.0", "ran": true, "description": "qc.read — Foerderbericht 2024 lesen", "rationale": "qc.read mit add_column=\"jahr\", add_value=2024, file=\"foerderbericht2024.csv\"", "keyStep": false, "dir": "steps/04-foerderbericht-generisch-1788373811014-step-2", "inputs": ["foerderbericht2024.csv", "params.json", "params.R", "qc.read.R"], "outputs": ["out.csv", "params.used.json", "schema.csv"], "files": {"inputs": [{"path": "foerderbericht2024.csv", "hash": "sha256:4f089e4aefb2368010494d3890b8a08c54011b50d9b5fc567b08289c3ac8ef27"}, {"path": "params.json", "hash": "sha256:2a5fc20b52c4c563fa1c46a3ae5973098828674f6d42563e048b92fce10e1dba"}, {"path": "params.R", "hash": "sha256:995e734393e6d0423a14b801ee5e574bc1044d57d91275890535d8927016b6d2"}, {"path": "qc.read.R", "hash": "sha256:8baf84ab1d9bffd55aab1b768cbd8909d5bad4ad81d32b1291f87b6e9944f107"}], "outputs": [{"path": "out.csv", "hash": "sha256:e125cf1daf1395570cf7cf4b348c6da541f28a40b803745671245c710dfce1cb"}, {"path": "params.used.json", "hash": "sha256:84981de7aedf7b82ae533d8c75aaf99d435573ceb4fa7d60a62d804fb4cad24d"}, {"path": "schema.csv", "hash": "sha256:cc85e1b6514711e1b501c2140e1b71f9ec76a2212deb3ac202da4bdd981372f7"}]}}, {"id": "step05", "name": "Step 10", "tree": "cockpit", "cmd": "Rscript qc.bind.R", "env": "jam-r 1.0.0", "ran": true, "description": "qc.bind — beide Jahre stapeln", "rationale": "qc.bind mit files=[\"a.csv\",\"b.csv\"]", "keyStep": false, "dir": "steps/05-cockpit-step-10", "inputs": ["a.csv", "b.csv", "params.json", "params.R", "qc.bind.R"], "outputs": ["out.csv", "params.used.json"], "files": {"inputs": [{"path": "a.csv", "hash": "sha256:5b3719866d5d69f48ae8709cd236a5908b48943929194804e4802a5e80365b24"}, {"path": "b.csv", "hash": "sha256:e125cf1daf1395570cf7cf4b348c6da541f28a40b803745671245c710dfce1cb"}, {"path": "params.json", "hash": "sha256:ad8590d3ab1b78d14b41a1a2394e6a588393ce59c2adbd5488c70c3d0aa5eda7"}, {"path": "params.R", "hash": "sha256:995e734393e6d0423a14b801ee5e574bc1044d57d91275890535d8927016b6d2"}, {"path": "qc.bind.R", "hash": "sha256:1a1821141fd3fdda3fe5078165d7caeda769a194b95d96af6a939d3f11dc96a0"}], "outputs": [{"path": "out.csv", "hash": "sha256:6b36ffe844c2fd6b45280f51227261497ca538c49357dcfb2fd575d2d8fd884f"}, {"path": "params.used.json", "hash": "sha256:4098c8b8bcd50bfd4b77650e8aec09a2719b5b8efd374c7e2650f6307c716ed3"}]}}, {"id": "step06", "name": "Step 3", "tree": "foerderbericht-generisch-1788373811014", "cmd": "Rscript qc.bind.R", "env": "jam-r 1.0.0", "ran": true, "description": "qc.bind — beide Jahre stapeln", "rationale": "qc.bind mit files=[\"a.csv\",\"b.csv\"]", "keyStep": false, "dir": "steps/06-foerderbericht-generisch-1788373811014-step-3", "inputs": ["a.csv", "b.csv", "params.json", "params.R", "qc.bind.R"], "outputs": ["out.csv", "params.used.json"], "files": {"inputs": [{"path": "a.csv", "hash": "sha256:5b3719866d5d69f48ae8709cd236a5908b48943929194804e4802a5e80365b24"}, {"path": "b.csv", "hash": "sha256:e125cf1daf1395570cf7cf4b348c6da541f28a40b803745671245c710dfce1cb"}, {"path": "params.json", "hash": "sha256:ad8590d3ab1b78d14b41a1a2394e6a588393ce59c2adbd5488c70c3d0aa5eda7"}, {"path": "params.R", "hash": "sha256:995e734393e6d0423a14b801ee5e574bc1044d57d91275890535d8927016b6d2"}, {"path": "qc.bind.R", "hash": "sha256:1a1821141fd3fdda3fe5078165d7caeda769a194b95d96af6a939d3f11dc96a0"}], "outputs": [{"path": "out.csv", "hash": "sha256:6b36ffe844c2fd6b45280f51227261497ca538c49357dcfb2fd575d2d8fd884f"}, {"path": "params.used.json", "hash": "sha256:4098c8b8bcd50bfd4b77650e8aec09a2719b5b8efd374c7e2650f6307c716ed3"}]}}, {"id": "step07", "name": "Step 11", "tree": "cockpit", "cmd": "Rscript qc.filter.R", "env": "jam-r 1.0.0", "ran": true, "description": "qc.filter — auf Kultur und Wissenschaft", "rationale": "Untersuchungsgegenstand ist die Geschäftsgruppe Kultur und Wissenschaft", "keyStep": false, "dir": "steps/07-cockpit-step-11", "inputs": ["data.csv", "params.json", "params.R", "qc.filter.R"], "outputs": ["out.csv", "params.used.json"], "files": {"inputs": [{"path": "data.csv", "hash": "sha256:6b36ffe844c2fd6b45280f51227261497ca538c49357dcfb2fd575d2d8fd884f"}, {"path": "params.json", "hash": "sha256:3826f29ec86b7c336fc86d831dd153a2de586aecf39e65eaf43722512ac58e9e"}, {"path": "params.R", "hash": "sha256:995e734393e6d0423a14b801ee5e574bc1044d57d91275890535d8927016b6d2"}, {"path": "qc.filter.R", "hash": "sha256:71949b33558f3924c697c9afcc6287d0955ce4002a9b29dd9448759189a699dc"}], "outputs": [{"path": "out.csv", "hash": "sha256:fa85627d00225410944a3598e7ea479e3276df1b58052c4dcb8c35fc5e192e44"}, {"path": "params.used.json", "hash": "sha256:a83162daafe949d79fb6f7cf6ae413cf2fed0d184cd5f45674c682d39927865d"}]}}, {"id": "step08", "name": "Step 4", "tree": "foerderbericht-generisch-1788373811014", "cmd": "Rscript qc.filter.R", "env": "jam-r 1.0.0", "ran": true, "description": "qc.filter — auf Kultur und Wissenschaft", "rationale": "Untersuchungsgegenstand ist die Geschäftsgruppe Kultur und Wissenschaft", "keyStep": false, "dir": "steps/08-foerderbericht-generisch-1788373811014-step-4", "inputs": ["data.csv", "params.json", "params.R", "qc.filter.R"], "outputs": ["out.csv", "params.used.json"], "files": {"inputs": [{"path": "data.csv", "hash": "sha256:6b36ffe844c2fd6b45280f51227261497ca538c49357dcfb2fd575d2d8fd884f"}, {"path": "params.json", "hash": "sha256:3826f29ec86b7c336fc86d831dd153a2de586aecf39e65eaf43722512ac58e9e"}, {"path": "params.R", "hash": "sha256:995e734393e6d0423a14b801ee5e574bc1044d57d91275890535d8927016b6d2"}, {"path": "qc.filter.R", "hash": "sha256:71949b33558f3924c697c9afcc6287d0955ce4002a9b29dd9448759189a699dc"}], "outputs": [{"path": "out.csv", "hash": "sha256:fa85627d00225410944a3598e7ea479e3276df1b58052c4dcb8c35fc5e192e44"}, {"path": "params.used.json", "hash": "sha256:a83162daafe949d79fb6f7cf6ae413cf2fed0d184cd5f45674c682d39927865d"}]}}, {"id": "step09", "name": "Step 5", "tree": "foerderbericht-generisch-1788373811014", "cmd": "Rscript qc.filter.R", "env": "jam-r 1.0.0", "ran": true, "description": "qc.filter — Grossfoerderungen ausschliessen", "rationale": "Großförderungen über 50 Mio. € sind Einzelfallentscheidungen und verzerren den Jahresvergleich", "keyStep": false, "dir": "steps/09-foerderbericht-generisch-1788373811014-step-5", "inputs": ["data.csv", "params.json", "params.R", "qc.filter.R"], "outputs": ["out.csv", "params.used.json"], "files": {"inputs": [{"path": "data.csv", "hash": "sha256:fa85627d00225410944a3598e7ea479e3276df1b58052c4dcb8c35fc5e192e44"}, {"path": "params.json", "hash": "sha256:a636ac6c2919bf5495d85489be29b7204a7a078d3547d02655721008a12dc719"}, {"path": "params.R", "hash": "sha256:995e734393e6d0423a14b801ee5e574bc1044d57d91275890535d8927016b6d2"}, {"path": "qc.filter.R", "hash": "sha256:71949b33558f3924c697c9afcc6287d0955ce4002a9b29dd9448759189a699dc"}], "outputs": [{"path": "out.csv", "hash": "sha256:3768dfe3abd5c4f30d6be66467d024b8ffb4d54f63d53de3c43f634da5d30024"}, {"path": "params.used.json", "hash": "sha256:0e1f845d6f1368256bbb644618f29c7d261ad74ad4fdd9395b70570257773040"}]}}, {"id": "step10", "name": "Step 12", "tree": "cockpit", "cmd": "Rscript qc.filter.R", "env": "jam-r 1.0.0", "ran": true, "description": "qc.filter — Grossfoerderungen ausschliessen", "rationale": "Großförderungen über 50 Mio. € sind Einzelfallentscheidungen und verzerren den Jahresvergleich", "keyStep": false, "dir": "steps/10-cockpit-step-12", "inputs": ["data.csv", "params.json", "params.R", "qc.filter.R"], "outputs": ["out.csv", "params.used.json"], "files": {"inputs": [{"path": "data.csv", "hash": "sha256:fa85627d00225410944a3598e7ea479e3276df1b58052c4dcb8c35fc5e192e44"}, {"path": "params.json", "hash": "sha256:a636ac6c2919bf5495d85489be29b7204a7a078d3547d02655721008a12dc719"}, {"path": "params.R", "hash": "sha256:995e734393e6d0423a14b801ee5e574bc1044d57d91275890535d8927016b6d2"}, {"path": "qc.filter.R", "hash": "sha256:71949b33558f3924c697c9afcc6287d0955ce4002a9b29dd9448759189a699dc"}], "outputs": [{"path": "out.csv", "hash": "sha256:3768dfe3abd5c4f30d6be66467d024b8ffb4d54f63d53de3c43f634da5d30024"}, {"path": "params.used.json", "hash": "sha256:0e1f845d6f1368256bbb644618f29c7d261ad74ad4fdd9395b70570257773040"}]}}, {"id": "step11", "name": "Step 6", "tree": "foerderbericht-generisch-1788373811014", "cmd": "Rscript eda.group.R", "env": "jam-r 1.0.0", "ran": true, "description": "eda.group — nach Jahr summieren", "rationale": "eda.group mit aggregate=\"sum\", by=\"jahr\", value=\"Ausbezahlte Fördersumme\"", "keyStep": false, "dir": "steps/11-foerderbericht-generisch-1788373811014-step-6", "inputs": ["data.csv", "eda.group.R", "params.json", "params.R"], "outputs": ["out.csv", "params.used.json", "plot.png"], "files": {"inputs": [{"path": "data.csv", "hash": "sha256:3768dfe3abd5c4f30d6be66467d024b8ffb4d54f63d53de3c43f634da5d30024"}, {"path": "eda.group.R", "hash": "sha256:f9a312b1f80b9ccb3e550b01bd24dac6bb975a837888de41752209e98ad8803e"}, {"path": "params.json", "hash": "sha256:b1da17829a30b46d8b2028ed1d8397e9cfd827567c8866763567dd9150022e66"}, {"path": "params.R", "hash": "sha256:995e734393e6d0423a14b801ee5e574bc1044d57d91275890535d8927016b6d2"}], "outputs": [{"path": "out.csv", "hash": "sha256:d3758c6a5bf768653cbfb79c629a218258e3d8669377e9042213c91dbd868701"}, {"path": "params.used.json", "hash": "sha256:ffbcc15386a6ec3314df691d2b44e0d4cfa2f08c80d59e417c6b8e51a0914c19"}, {"path": "plot.png", "hash": "sha256:98eef83a5a7a4d655626251a42ae03035993d1d505d8f95629a001606f6bedce"}]}}, {"id": "step12", "name": "Step 13", "tree": "cockpit", "cmd": "Rscript eda.group.R", "env": "jam-r 1.0.0", "ran": true, "description": "eda.group — nach Jahr summieren", "rationale": "eda.group mit aggregate=\"sum\", by=\"jahr\", value=\"Ausbezahlte Fördersumme\"", "keyStep": false, "dir": "steps/12-cockpit-step-13", "inputs": ["data.csv", "eda.group.R", "params.json", "params.R"], "outputs": ["out.csv", "params.used.json", "plot.png"], "files": {"inputs": [{"path": "data.csv", "hash": "sha256:3768dfe3abd5c4f30d6be66467d024b8ffb4d54f63d53de3c43f634da5d30024"}, {"path": "eda.group.R", "hash": "sha256:f9a312b1f80b9ccb3e550b01bd24dac6bb975a837888de41752209e98ad8803e"}, {"path": "params.json", "hash": "sha256:b1da17829a30b46d8b2028ed1d8397e9cfd827567c8866763567dd9150022e66"}, {"path": "params.R", "hash": "sha256:995e734393e6d0423a14b801ee5e574bc1044d57d91275890535d8927016b6d2"}], "outputs": [{"path": "out.csv", "hash": "sha256:d3758c6a5bf768653cbfb79c629a218258e3d8669377e9042213c91dbd868701"}, {"path": "params.used.json", "hash": "sha256:ffbcc15386a6ec3314df691d2b44e0d4cfa2f08c80d59e417c6b8e51a0914c19"}, {"path": "plot.png", "hash": "sha256:98eef83a5a7a4d655626251a42ae03035993d1d505d8f95629a001606f6bedce"}]}}, {"id": "step13", "name": "Step 9", "tree": "foerderbericht-generisch-1788373811014", "cmd": "Rscript report.figure.R", "env": "jam-r 1.0.0", "ran": true, "description": "report.figure — die Abbildung", "rationale": "report.figure mit title=\"Kultur und Wissenschaft — ausbezahlte Förderungen\", type=\"bar\", x=\"jahr\", y=\"wert\", ylim=[205000000,272000000]", "keyStep": false, "dir": "steps/13-foerderbericht-generisch-1788373811014-step-9", "inputs": ["data.csv", "params.json", "params.R", "report.figure.R"], "outputs": ["figure.png", "params.used.json"], "files": {"inputs": [{"path": "data.csv", "hash": "sha256:d3758c6a5bf768653cbfb79c629a218258e3d8669377e9042213c91dbd868701"}, {"path": "params.json", "hash": "sha256:ebf942404eb405fc7e8afa5f7d9530d8624491ee11987a3d92c7b4056200c0d5"}, {"path": "params.R", "hash": "sha256:995e734393e6d0423a14b801ee5e574bc1044d57d91275890535d8927016b6d2"}, {"path": "report.figure.R", "hash": "sha256:0fa543241d52ea3a22f1ad1dd5d15d922524cb57c0544a560a5e6f923b8c89a1"}], "outputs": [{"path": "figure.png", "hash": "sha256:919bf309afc838be041d0bc2899aca6b59d6a7ad47080c03a444e43f6cc4982d"}, {"path": "params.used.json", "hash": "sha256:56fb6eaefd31e6c812d9dd439d3003af443f73f99e4d472895bf7837eefa156b"}]}}, {"id": "step14", "name": "Step 15", "tree": "cockpit", "cmd": "Rscript report.figure.R", "env": "jam-r 1.0.0", "ran": true, "description": "report.figure — die Abbildung", "rationale": "report.figure mit title=\"Kultur und Wissenschaft — ausbezahlte Förderungen\", type=\"bar\", x=\"jahr\", y=\"wert\", ylim=[205000000,272000000]", "keyStep": false, "dir": "steps/14-cockpit-step-15", "inputs": ["data.csv", "params.json", "params.R", "report.figure.R"], "outputs": ["figure.png", "params.used.json"], "files": {"inputs": [{"path": "data.csv", "hash": "sha256:d3758c6a5bf768653cbfb79c629a218258e3d8669377e9042213c91dbd868701"}, {"path": "params.json", "hash": "sha256:ebf942404eb405fc7e8afa5f7d9530d8624491ee11987a3d92c7b4056200c0d5"}, {"path": "params.R", "hash": "sha256:995e734393e6d0423a14b801ee5e574bc1044d57d91275890535d8927016b6d2"}, {"path": "report.figure.R", "hash": "sha256:0fa543241d52ea3a22f1ad1dd5d15d922524cb57c0544a560a5e6f923b8c89a1"}], "outputs": [{"path": "figure.png", "hash": "sha256:919bf309afc838be041d0bc2899aca6b59d6a7ad47080c03a444e43f6cc4982d"}, {"path": "params.used.json", "hash": "sha256:56fb6eaefd31e6c812d9dd439d3003af443f73f99e4d472895bf7837eefa156b"}]}}, {"id": "step15", "name": "Step 13", "tree": "report.render", "cmd": "Rscript render_poster.R", "env": "qms-docx 0.3.0", "ran": true, "description": "Render report report (chapters + verbalised rule-slots) via /Projects/jamdemo/render-method", "keyStep": false, "dir": "steps/15-report-render-step-13", "inputs": ["data-format.md", "data-origin.md", "data.md", "eda-anomalies.md", "eda-anomalies.png", "eda-overview.md", "eda-overview.png", "eda.md", "model-computation.md", "model-computation.png", "model-robustness.md", "model-robustness.png", "model.md", "render_poster.R", "report.json", "results.md"], "outputs": ["JAM-POSTER.docx", "JAM-POSTER.html", "JAM-POSTER.pdf", "JAM-POSTER.Rmd"], "files": {"inputs": [{"path": "data-format.md", "hash": "sha256:72b241bc5afeeae2f013e97c6b9485cbbbcb78a698a307fc2efbb9a5f3408e3b"}, {"path": "data-origin.md", "hash": "sha256:91d9aa37b1ce9d6e13375a8eba89f2caecbc32b05fb52055132a02742703be17"}, {"path": "data.md", "hash": "sha256:10e30c67f705c2413b1aa67caa3e8ec6e592f3569955f4e05be7fc62154df579"}, {"path": "eda-anomalies.md", "hash": "sha256:8966a2eda7417e27f3c3c4cd08a163a4d70fc6069b63a5fa45197680e250229e"}, {"path": "eda-anomalies.png", "hash": "sha256:919bf309afc838be041d0bc2899aca6b59d6a7ad47080c03a444e43f6cc4982d"}, {"path": "eda-overview.md", "hash": "sha256:04797bea2f321032cea56f610925e342f548bc74863824d3aa4e9b2c7280ef55"}, {"path": "eda-overview.png", "hash": "sha256:919bf309afc838be041d0bc2899aca6b59d6a7ad47080c03a444e43f6cc4982d"}, {"path": "eda.md", "hash": "sha256:e5e9c96cd73d31a74709222e6f1a2bf9e82faff7263c85e81e2cd5750ed0092a"}, {"path": "model-computation.md", "hash": "sha256:9e17de8d6c70133fc4bf1295131910902a2210dc01189275b65d0fe17aa19972"}, {"path": "model-computation.png", "hash": "sha256:98eef83a5a7a4d655626251a42ae03035993d1d505d8f95629a001606f6bedce"}, {"path": "model-robustness.md", "hash": "sha256:b05c8b1a4a75a7340e41be4ee87526bebbb72a91829b80bd77e831db9cb6f2f1"}, {"path": "model-robustness.png", "hash": "sha256:98eef83a5a7a4d655626251a42ae03035993d1d505d8f95629a001606f6bedce"}, {"path": "model.md", "hash": "sha256:8c276e0d5aaf088da4891e335eb42cf53037828343278cbc6aac9772f33014f7"}, {"path": "render_poster.R", "hash": "sha256:648882fcfa9f65a727c03a231a2f1d12fcff9cbf4457b8edf3df6399f10e9f9d"}, {"path": "report.json", "hash": "sha256:e3a74567703fe19c7f775de129f0e7a17073f9089e5d2823f0329d0e1b32d676"}, {"path": "results.md", "hash": "sha256:898fbc44d191148825c33a097bb6380b4c734329e521f8f9a3cdb22d26c37c08"}], "outputs": [{"path": "JAM-POSTER.docx", "hash": "sha256:358c9bd5d2c29ebaefe3586eff95d8e8df32707b0bf5302f070f6ca293bb41df"}, {"path": "JAM-POSTER.html", "hash": "sha256:a568df1e8a98d36cb40dce7acf654a0149fcca7a2343ff363b66028b8b07e12b"}, {"path": "JAM-POSTER.pdf", "hash": "sha256:0116049e9dd9b7cf1005ef071a4b20395ee815a52c3b3aeed835a6cec929efe8"}, {"path": "JAM-POSTER.Rmd", "hash": "sha256:5b10be811c44cf1b54b10457da94f62862e04ca1af0f393e156faec3068539e3"}]}}], "edges": [{"from": "step01", "to": "step05"}, {"from": "step02", "to": "step05"}, {"from": "step05", "to": "step07"}, {"from": "step07", "to": "step10"}, {"from": "step03", "to": "step06"}, {"from": "step04", "to": "step06"}, {"from": "step06", "to": "step08"}, {"from": "step08", "to": "step09"}, {"from": "step09", "to": "step10"}, {"from": "step10", "to": "step12"}, {"from": "step12", "to": "step14"}, {"from": "step09", "to": "step11"}, {"from": "step11", "to": "step13"}, {"from": "step13", "to": "step14"}, {"from": "step14", "to": "step15"}, {"from": "step12", "to": "step15"}]};
+
+const byId = new Map(DATA.steps.map(s => [s.id, s]));
+const parents = new Map(DATA.steps.map(s => [s.id, []]));
+const children = new Map(DATA.steps.map(s => [s.id, []]));
+for (const e of DATA.edges) {
+  if (!parents.has(e.to) || !children.has(e.from)) continue;
+  parents.get(e.to).push(e.from);
+  children.get(e.from).push(e.to);
+}
+
+// Depth = longest path from a source. Longest, not shortest: a step must sit to the right of
+// EVERY step it depends on, or an edge would run backwards and the picture would lie about order.
+const depth = new Map();
+const visit = (id, seen = new Set()) => {
+  if (depth.has(id)) return depth.get(id);
+  if (seen.has(id)) return 0;
+  seen.add(id);
+  const ps = parents.get(id) || [];
+  const d = ps.length ? Math.max(...ps.map(p => visit(p, seen))) + 1 : 0;
+  depth.set(id, d);
+  return d;
+};
+DATA.steps.forEach(s => visit(s.id));
+
+const cols = [];
+for (const s of DATA.steps) {
+  const d = depth.get(s.id);
+  (cols[d] = cols[d] || []).push(s);
+}
+
+const NW = 168, NH = 52, GX = 68, GY = 24, PAD = 14;
+const pos = new Map();
+cols.forEach((col, x) => col.forEach((s, y) => {
+  pos.set(s.id, { x: PAD + x * (NW + GX), y: PAD + y * (NH + GY) });
+}));
+const W = PAD * 2 + cols.length * (NW + GX) - GX;
+const H = PAD * 2 + Math.max(...cols.map(c => c.length)) * (NH + GY) - GY;
+
+const ns = 'http://www.w3.org/2000/svg';
+const svg = document.createElementNS(ns, 'svg');
+svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+svg.setAttribute('width', W);
+svg.setAttribute('height', H);
+
+const edgeEls = [];
+for (const e of DATA.edges) {
+  const a = pos.get(e.from), b = pos.get(e.to);
+  if (!a || !b) continue;
+  const x1 = a.x + NW, y1 = a.y + NH / 2, x2 = b.x, y2 = b.y + NH / 2;
+  const mid = (x1 + x2) / 2;
+  const p = document.createElementNS(ns, 'path');
+  p.setAttribute('class', 'edge');
+  p.setAttribute('d', `M${x1},${y1} C${mid},${y1} ${mid},${y2} ${x2},${y2}`);
+  p.dataset.from = e.from; p.dataset.to = e.to;
+  svg.append(p);
+  edgeEls.push(p);
+}
+
+const short = s => (s.cmd || '').replace(/^Rscript /, '').replace(/\.R$/, '');
+const tail = s => {
+  const d = s.description || '';
+  const i = d.indexOf('—');
+  return (i >= 0 ? d.slice(i + 1) : d).trim();
+};
+
+const nodeEls = new Map();
+for (const s of DATA.steps) {
+  const { x, y } = pos.get(s.id);
+  const g = document.createElementNS(ns, 'g');
+  g.setAttribute('class', 'node' + (s.id === DATA.root ? ' root' : ''));
+  g.setAttribute('transform', `translate(${x},${y})`);
+  const r = document.createElementNS(ns, 'rect');
+  r.setAttribute('width', NW); r.setAttribute('height', NH);
+  const t1 = document.createElementNS(ns, 'text');
+  t1.setAttribute('x', 10); t1.setAttribute('y', 21); t1.textContent = short(s);
+  const t2 = document.createElementNS(ns, 'text');
+  t2.setAttribute('class', 'sub'); t2.setAttribute('x', 10); t2.setAttribute('y', 37);
+  const sub = tail(s);
+  t2.textContent = sub.length > 24 ? sub.slice(0, 23) + '…' : sub;
+  g.append(r, t1, t2);
+  g.addEventListener('click', () => select(s.id));
+  svg.append(g);
+  nodeEls.set(s.id, g);
+}
+document.getElementById('canvas').append(svg);
+
+const esc = t => String(t == null ? '' : t)
+  .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+const fileList = (list) => list && list.length
+  ? '<ul class="files">' + list.map(f =>
+      `<li><span>${esc(f.path)}</span><span class="h" title="${esc(f.hash)}">${esc((f.hash || '').slice(7, 19))}</span></li>`).join('') + '</ul>'
+  : '<p class="hint">none</p>';
+
+function select(id) {
+  const s = byId.get(id);
+  for (const [k, g] of nodeEls) g.classList.toggle('sel', k === id);
+  for (const p of edgeEls) p.classList.toggle('lit', p.dataset.to === id || p.dataset.from === id);
+  const files = s.files || { inputs: [], outputs: [] };
+  document.getElementById('detail').innerHTML = `
+    <h2>${esc(short(s))}</h2>
+    <div class="tree">${esc(s.tree)} · ${esc(s.name)}</div>
+    <dl>
+      <dt>What it is</dt><dd>${esc(s.description) || '<span class="hint">no description</span>'}</dd>
+      ${s.rationale ? `<dt>Why it exists</dt><dd class="why">${esc(s.rationale)}</dd>` : ''}
+      <dt>Command</dt><dd><code>${esc(s.cmd)}</code></dd>
+      <dt>Environment</dt><dd><code>${esc(s.env)}</code></dd>
+      <dt>Inputs</dt><dd>${fileList(files.inputs)}</dd>
+      <dt>Outputs</dt><dd>${fileList(files.outputs)}</dd>
+      <dt>The bytes</dt>
+      <dd><a href="https://github.com/gitmick/jourfixe-demo/tree/main/${esc(s.dir)}">${esc(s.dir)}</a></dd>
+    </dl>`;
+}
+select(DATA.root);
+</script>
+</body></html>

@@ -1,0 +1,116 @@
+{
+  "stepId": "22BB7AC5B0004B65BAC17322FA5500DD",
+  "step": "Step 13",
+  "tree": "report.render",
+  "ran": true,
+  "attribution": {
+    "basis": "audit",
+    "heuristic": false,
+    "decided": {
+      "audit": 5,
+      "timestamp": 0
+    },
+    "note": "improve's audit trail attributes each file to a user upload or to run 768EE5021DC441D1AF91B17EEF4B040D"
+  },
+  "dangling": [],
+  "unhashed": [],
+  "spec": {
+    "predicate": "foton",
+    "inputs": [
+      {
+        "path": "data-format.md",
+        "hash": "sha256:72b241bc5afeeae2f013e97c6b9485cbbbcb78a698a307fc2efbb9a5f3408e3b"
+      },
+      {
+        "path": "data-origin.md",
+        "hash": "sha256:91d9aa37b1ce9d6e13375a8eba89f2caecbc32b05fb52055132a02742703be17"
+      },
+      {
+        "path": "data.md",
+        "hash": "sha256:10e30c67f705c2413b1aa67caa3e8ec6e592f3569955f4e05be7fc62154df579"
+      },
+      {
+        "path": "eda-anomalies.md",
+        "hash": "sha256:8966a2eda7417e27f3c3c4cd08a163a4d70fc6069b63a5fa45197680e250229e"
+      },
+      {
+        "path": "eda-anomalies.png",
+        "hash": "sha256:919bf309afc838be041d0bc2899aca6b59d6a7ad47080c03a444e43f6cc4982d"
+      },
+      {
+        "path": "eda-overview.md",
+        "hash": "sha256:04797bea2f321032cea56f610925e342f548bc74863824d3aa4e9b2c7280ef55"
+      },
+      {
+        "path": "eda-overview.png",
+        "hash": "sha256:919bf309afc838be041d0bc2899aca6b59d6a7ad47080c03a444e43f6cc4982d"
+      },
+      {
+        "path": "eda.md",
+        "hash": "sha256:e5e9c96cd73d31a74709222e6f1a2bf9e82faff7263c85e81e2cd5750ed0092a"
+      },
+      {
+        "path": "model-computation.md",
+        "hash": "sha256:9e17de8d6c70133fc4bf1295131910902a2210dc01189275b65d0fe17aa19972"
+      },
+      {
+        "path": "model-computation.png",
+        "hash": "sha256:98eef83a5a7a4d655626251a42ae03035993d1d505d8f95629a001606f6bedce"
+      },
+      {
+        "path": "model-robustness.md",
+        "hash": "sha256:b05c8b1a4a75a7340e41be4ee87526bebbb72a91829b80bd77e831db9cb6f2f1"
+      },
+      {
+        "path": "model-robustness.png",
+        "hash": "sha256:98eef83a5a7a4d655626251a42ae03035993d1d505d8f95629a001606f6bedce"
+      },
+      {
+        "path": "model.md",
+        "hash": "sha256:8c276e0d5aaf088da4891e335eb42cf53037828343278cbc6aac9772f33014f7"
+      },
+      {
+        "path": "render_poster.R",
+        "hash": "sha256:648882fcfa9f65a727c03a231a2f1d12fcff9cbf4457b8edf3df6399f10e9f9d"
+      },
+      {
+        "path": "report.json",
+        "hash": "sha256:e3a74567703fe19c7f775de129f0e7a17073f9089e5d2823f0329d0e1b32d676"
+      },
+      {
+        "path": "results.md",
+        "hash": "sha256:898fbc44d191148825c33a097bb6380b4c734329e521f8f9a3cdb22d26c37c08"
+      }
+    ],
+    "outputs": [
+      {
+        "path": "JAM-POSTER.docx",
+        "hash": "sha256:358c9bd5d2c29ebaefe3586eff95d8e8df32707b0bf5302f070f6ca293bb41df"
+      },
+      {
+        "path": "JAM-POSTER.html",
+        "hash": "sha256:a568df1e8a98d36cb40dce7acf654a0149fcca7a2343ff363b66028b8b07e12b"
+      },
+      {
+        "path": "JAM-POSTER.pdf",
+        "hash": "sha256:0116049e9dd9b7cf1005ef071a4b20395ee815a52c3b3aeed835a6cec929efe8"
+      },
+      {
+        "path": "JAM-POSTER.Rmd",
+        "hash": "sha256:5b10be811c44cf1b54b10457da94f62862e04ca1af0f393e156faec3068539e3"
+      }
+    ],
+    "protocol": {
+      "kind": "improve-tool-instance",
+      "descriptor": {
+        "command": {
+          "file": "sha256:648882fcfa9f65a727c03a231a2f1d12fcff9cbf4457b8edf3df6399f10e9f9d"
+        },
+        "environment": {
+          "kind": "improve-tool-instance",
+          "ref": "qms-docx 0.3.0"
+        }
+      }
+    }
+  }
+}

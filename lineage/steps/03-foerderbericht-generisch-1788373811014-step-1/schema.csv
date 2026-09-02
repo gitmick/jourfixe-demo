@@ -1,0 +1,8 @@
+"name","storage","type","n","missing","distinct","example"
+"GG Langtext","character","categorical",7171,0,7,"Bildung, Jugend, Integration und Transparenz"
+"DST Langtext","character","categorical",7171,0,17,"Bildung und Jugend"
+"Förderprogramm","character","categorical",7171,0,101,"Offene Kinder- und Jugendarbeit (zentral)"
+"Postleitzahl","character","categorical",7171,0,92,"1080"
+"Ausbezahlte Fördersumme","numeric","continuous",7171,0,2457,"1156000"
+"Anzahl der Förderfälle","numeric","continuous",7171,0,44,"1"
+"jahr","numeric","ordinal",7171,0,1,"2023"

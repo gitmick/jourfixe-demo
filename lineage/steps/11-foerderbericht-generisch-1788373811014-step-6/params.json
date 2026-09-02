@@ -1,0 +1,5 @@
+{
+  "aggregate": "sum",
+  "by": "jahr",
+  "value": "Ausbezahlte Fördersumme"
+}

@@ -1,0 +1,12 @@
+{
+  "type": "bar",
+  "x": "jahr",
+  "y": "wert",
+  "ylim": [205000000, 272000000],
+  "palette": "steel",
+  "errorbars": false,
+  "title": "Kultur und Wissenschaft — ausbezahlte Förderungen",
+  "scale": 1,
+  "block": "report.figure",
+  "stage": "Report"
+}

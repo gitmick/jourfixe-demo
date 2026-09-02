@@ -1,0 +1,64 @@
+{
+  "stepId": "770C7C7C8E094178AC5B48D6E965947C",
+  "step": "Step 2",
+  "tree": "foerderbericht-generisch-1788373811014",
+  "ran": true,
+  "attribution": {
+    "basis": "audit",
+    "heuristic": false,
+    "decided": {
+      "audit": 6,
+      "timestamp": 0
+    },
+    "note": "improve's audit trail attributes each file to a user upload or to run 9C533DA968B34DF9A525DC14A77F80A4"
+  },
+  "dangling": [],
+  "unhashed": [],
+  "spec": {
+    "predicate": "foton",
+    "inputs": [
+      {
+        "path": "foerderbericht2024.csv",
+        "hash": "sha256:4f089e4aefb2368010494d3890b8a08c54011b50d9b5fc567b08289c3ac8ef27"
+      },
+      {
+        "path": "params.json",
+        "hash": "sha256:2a5fc20b52c4c563fa1c46a3ae5973098828674f6d42563e048b92fce10e1dba"
+      },
+      {
+        "path": "params.R",
+        "hash": "sha256:995e734393e6d0423a14b801ee5e574bc1044d57d91275890535d8927016b6d2"
+      },
+      {
+        "path": "qc.read.R",
+        "hash": "sha256:8baf84ab1d9bffd55aab1b768cbd8909d5bad4ad81d32b1291f87b6e9944f107"
+      }
+    ],
+    "outputs": [
+      {
+        "path": "out.csv",
+        "hash": "sha256:e125cf1daf1395570cf7cf4b348c6da541f28a40b803745671245c710dfce1cb"
+      },
+      {
+        "path": "params.used.json",
+        "hash": "sha256:84981de7aedf7b82ae533d8c75aaf99d435573ceb4fa7d60a62d804fb4cad24d"
+      },
+      {
+        "path": "schema.csv",
+        "hash": "sha256:cc85e1b6514711e1b501c2140e1b71f9ec76a2212deb3ac202da4bdd981372f7"
+      }
+    ],
+    "protocol": {
+      "kind": "improve-tool-instance",
+      "descriptor": {
+        "command": {
+          "file": "sha256:8baf84ab1d9bffd55aab1b768cbd8909d5bad4ad81d32b1291f87b6e9944f107"
+        },
+        "environment": {
+          "kind": "improve-tool-instance",
+          "ref": "jam-r 1.0.0"
+        }
+      }
+    }
+  }
+}

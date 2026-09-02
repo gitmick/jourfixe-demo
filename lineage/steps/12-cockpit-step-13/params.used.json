@@ -1,0 +1,7 @@
+{
+  "by": "jahr",
+  "value": "Ausbezahlte Fördersumme",
+  "aggregate": "sum",
+  "block": "eda.group",
+  "stage": "EDA"
+}

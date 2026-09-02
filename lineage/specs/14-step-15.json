@@ -1,0 +1,60 @@
+{
+  "stepId": "9B978322395742519B5AE3939E8A62F6",
+  "step": "Step 15",
+  "tree": "cockpit",
+  "ran": true,
+  "attribution": {
+    "basis": "audit",
+    "heuristic": false,
+    "decided": {
+      "audit": 4,
+      "timestamp": 0
+    },
+    "note": "improve's audit trail attributes each file to a user upload or to run 695B476C2A62496E94E5FBDEFFA3D5C9"
+  },
+  "dangling": [],
+  "unhashed": [],
+  "spec": {
+    "predicate": "foton",
+    "inputs": [
+      {
+        "path": "data.csv",
+        "hash": "sha256:d3758c6a5bf768653cbfb79c629a218258e3d8669377e9042213c91dbd868701"
+      },
+      {
+        "path": "params.json",
+        "hash": "sha256:ebf942404eb405fc7e8afa5f7d9530d8624491ee11987a3d92c7b4056200c0d5"
+      },
+      {
+        "path": "params.R",
+        "hash": "sha256:995e734393e6d0423a14b801ee5e574bc1044d57d91275890535d8927016b6d2"
+      },
+      {
+        "path": "report.figure.R",
+        "hash": "sha256:0fa543241d52ea3a22f1ad1dd5d15d922524cb57c0544a560a5e6f923b8c89a1"
+      }
+    ],
+    "outputs": [
+      {
+        "path": "figure.png",
+        "hash": "sha256:919bf309afc838be041d0bc2899aca6b59d6a7ad47080c03a444e43f6cc4982d"
+      },
+      {
+        "path": "params.used.json",
+        "hash": "sha256:56fb6eaefd31e6c812d9dd439d3003af443f73f99e4d472895bf7837eefa156b"
+      }
+    ],
+    "protocol": {
+      "kind": "improve-tool-instance",
+      "descriptor": {
+        "command": {
+          "file": "sha256:0fa543241d52ea3a22f1ad1dd5d15d922524cb57c0544a560a5e6f923b8c89a1"
+        },
+        "environment": {
+          "kind": "improve-tool-instance",
+          "ref": "jam-r 1.0.0"
+        }
+      }
+    }
+  }
+}

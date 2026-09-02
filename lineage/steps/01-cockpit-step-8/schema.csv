@@ -1,0 +1,8 @@
+"name","storage","type","n","missing","distinct","example"
+"GG Langtext","character","categorical",5498,0,7,"Bildung, Jugend, Integration und Transparenz"
+"DST Langtext","character","categorical",5498,0,17,"Bildung und Jugend"
+"Förderprogramm","character","categorical",5498,0,108,"Förderung von Maßnahmen, Projekten und gemeinnützigen Organisationen im LGBTIQ-Bereich"
+"Postleitzahl","character","categorical",5498,0,83,"1060"
+"Ausbezahlte Fördersumme","numeric","continuous",5498,0,1734,"14100"
+"Anzahl der Förderfälle","numeric","continuous",5498,0,68,"1"
+"jahr","numeric","ordinal",5498,0,1,"2024"

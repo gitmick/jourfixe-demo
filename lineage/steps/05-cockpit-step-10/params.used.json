@@ -1,0 +1,5 @@
+{
+  "files": ["a.csv", "b.csv"],
+  "block": "qc.bind",
+  "stage": "QC"
+}
