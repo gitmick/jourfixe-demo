@@ -98,6 +98,12 @@ observes and records, it does not assert. `publish-plan.jsonl` is exactly the in
 step — they become nekton claims once the fotons have identities, which is why they sit beside the
 lineage rather than inside it.
 
+**Every locator here is pinned to a commit.** The file links in
+[`lineage/lineage.json`](lineage/lineage.json) and in the viewer point at
+`raw.githubusercontent.com/gitmick/jourfixe-demo/bfd2792f…/…` — the commit that holds those exact
+bytes — not at `main`. A branch moves; the bytes under it do not have to. This is the same rule
+`plankton author --located` enforces: no commit, no locator.
+
 **Internal locators have been removed.** Each file carried a `uri` pointing at the improve instance
 it came from; 127 of them were stripped for this public copy. They never entered a content address,
 so nothing about verification changes: the `sha256` of every file is untouched, and that is the

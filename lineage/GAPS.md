@@ -1,3 +1,3 @@
-# What this export could NOT resolve
+# Was der Export NICHT aufloesen konnte
 
-None. Every file of every step in this lineage is here as bytes.
+Keine. Jede Datei jedes Steps der Lineage liegt als Byte hier.
